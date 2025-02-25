@@ -1,19 +1,19 @@
 export class CommonPage {
     goToUrl(url) {
-        cy.task('logAction', '[Info] Navigating to homepage..');
+        cy.task('logAction', { message: '[Info] Navigating to homepage..', specFile: Cypress.spec.relative });
         cy.visit(url);
     }
 
     inputUsernamePassword(username, password) {
-        cy.task('logAction', `[Info] Entering username: ${username}`);
+        cy.task('logAction', { message: `[Info] Entering username: ${username}`, specFile: Cypress.spec.relative });
         cy.get('[data-test="username"]').type(username);
 
-        cy.task('logAction', `[Info] Entering password: ${password}`);
+        cy.task('logAction', { message: `[Info] Entering password: ${password}`, specFile: Cypress.spec.relative });
         cy.get('[data-test="password"]').type(password);
     }
 
     loginToSite(username, password) {
-        cy.task('logAction', '[Info] Loging in with username and password..');
+        cy.task('logAction', { message: '[Info] Loging in with username and password..', specFile: Cypress.spec.relative });
         this.inputUsernamePassword(username, password);
         cy.get('[data-test="login-button"]').click();
     }
@@ -54,7 +54,7 @@ export class CommonPage {
             const productName = $el.text().trim();
             keywordsArray.some((keyword) => {
                 if (productName.includes(keyword)) {
-                    cy.task('logAction', `[Info] Adding ${productName} to the cart..`);
+                    cy.task('logAction', { message: `[Info] Adding ${productName} to the cart..`, specFile: Cypress.spec.relative });
                     cy.wrap($el)
                         .parentsUntil('.inventory_item')
                         .children('.pricebar').children('button')
@@ -63,12 +63,12 @@ export class CommonPage {
                     productsAdded = this.appendToList(productName, productsAdded);
                     return true;
                 } else if (!productName.includes(keyword)) {
-                    cy.task('logAction', `[Warning] ${productName} is not a ${keyword}.`);
+                    cy.task('logAction', { message: `[Warning] ${productName} is not a ${keyword}.`, specFile: Cypress.spec.relative });
                 }
             });
         }).then(() => {
             Cypress.env('productsAdded', productsAdded);
-            cy.task('logAction', `[Info] ${Cypress.env('productsAdded')} product(s) added to the cart.`);
+            cy.task('logAction', { message: `[Info] ${Cypress.env('productsAdded')} product(s) added to the cart.`, specFile: Cypress.spec.relative });
         });
     }
 
@@ -79,7 +79,7 @@ export class CommonPage {
             const productName = $el.text().trim();
             keywordsArray.some((keyword) => {
                 if (productName.includes(keyword)) {
-                    cy.task('logAction', `[Info] Removing ${productName} from the cart..`);
+                    cy.task('logAction', { message: `[Info] Removing ${productName} from the cart..`, specFile: Cypress.spec.relative });
                     cy.wrap($el)
                         .parentsUntil('.inventory_item')
                         .children('.pricebar').children('button')
@@ -88,17 +88,17 @@ export class CommonPage {
                     productsRemoved = this.appendToList(productName, productsRemoved);
                     return true;
                 } else if (!productName.includes(keyword)) {
-                    cy.task('logAction', `[Warning] ${productName} is not a ${keyword}.`);
+                    cy.task('logAction', { message: `[Warning] ${productName} is not a ${keyword}.`, specFile: Cypress.spec.relative });
                 }
             });
         }).then(() => {
             Cypress.env('productsRemoved', productsRemoved);
-            cy.task('logAction', `[Info] ${Cypress.env('productsRemoved')} product(s) removed from the cart.`)
+            cy.task('logAction', { message: `[Info] ${Cypress.env('productsRemoved')} product(s) removed from the cart.`, specFile: Cypress.spec.relative })
         });
     }
 
     goToCartScreen() {
-        cy.task('logAction', '[Info] Navigating to cart screen..');
+        cy.task('logAction', { message: '[Info] Navigating to cart screen..', specFile: Cypress.spec.relative });
         cy.get('[data-test="shopping-cart-link"]').click();
     }
 }

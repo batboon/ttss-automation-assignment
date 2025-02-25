@@ -17,14 +17,18 @@ module.exports = defineConfig({
 
       // Define custom task to log actions
       on('task', {
-        logAction(message) {
-          const logDirectory = path.join(__dirname, 'cypress', 'logs');
+        logAction({ message, specFile }) {
+          const logDirectory = path.join(__dirname, "cypress", "logs");
+          const specName = path.basename(specFile, ".js").replace(/[^a-z0-9]/gi, "_").toLowerCase();
 
-          // Generate log file name once per test run
-          if (!global.logFilePath) {
-            const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-            global.logFilePath = path.join(logDirectory, `test-log-${timestamp}.txt`);
+          if (!global.logFiles) {
+            global.logFiles = {};
           }
+          if (!global.logFiles[specName]) {
+            const timestamp = new Date().toISOString().split('.')[0].replace(/[:.]/g, '-');
+            global.logFiles[specName] = path.join(logDirectory, `log-${specName}-${timestamp}.txt`);
+          }
+          const logFilePath = global.logFiles[specName];
 
           // Ensure the log directory exists
           if (!fs.existsSync(logDirectory)) {
@@ -35,7 +39,8 @@ module.exports = defineConfig({
           console.log(message);
 
           // Write to the log file
-          fs.appendFileSync(logFilePath, message + '\n');
+          const logMessage = `[${new Date().toISOString()}] ${message}`;
+          fs.appendFileSync(logFilePath, logMessage + '\n');
           return null;
         },
       });
@@ -47,7 +52,7 @@ module.exports = defineConfig({
     reportDir: "cypress/report/mochawesome-report",
     overwrite: false,
     html: true,
-    json: true,
+    json: false,
     timestamp: "ddmmyyyy_HHMMss",
     charts: true,
     embeddedScreenshots: true

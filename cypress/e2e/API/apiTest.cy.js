@@ -15,7 +15,6 @@ describe("Assignment 2: API Test", () => {
 
     it("API Test 1: API POST /users 201 (CREATE)", () => {
         apiCreate.createUserSuccessfully(user.name, user.job);
-        cy.task('logAction', 'CHECK API');
     })
 
     it("API Test 2: API GET /users/2 200 (SINGLE USER)", () => {

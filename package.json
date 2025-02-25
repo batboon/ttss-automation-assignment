@@ -5,7 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "cy:open": "cypress open",
-    "cy:run": "cypress run --headless --reporter mochawesome",
+    "cy:run": "cypress run --headless",
     "cy:run:ui": "cypress run --headless --reporter mochawesome --spec \"cypress/e2e/WEB/automateUI.cy.js\"",
     "cy:run:api": "cypress run --headless --reporter mochawesome --spec \"cypress/e2e/API/apiTest.cy.js\""
   },

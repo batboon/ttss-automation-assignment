@@ -10,7 +10,7 @@ describe("Assignment 1: Automate UI", () => {
     const config = Cypress.env("web");
 
     it("Automate UI 1: User can buy T-Shirt successfully", () => {
-        cy.task('logAction', '[Info] Test started: User can buy T-Shirt successfully');
+        cy.task('logAction', { message: '[Info] Test started: User can buy T-Shirt successfully', specFile: Cypress.spec.relative });
 
         // 1. Navigate to homepage and login
         commonPage.goToUrl(config.homepageUrl);
@@ -57,7 +57,7 @@ describe("Assignment 1: Automate UI", () => {
                     checkoutPage.finishCheckout();
 
                     // End of test
-                    cy.task('logAction', '[Success] Test completed: User can buy T-Shirt successfully');
+                    cy.task('logAction', { message: '[Success] Test completed: User can buy T-Shirt successfully', specFile: Cypress.spec.relative });
                 });
             });
         });
