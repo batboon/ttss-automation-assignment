@@ -1,0 +1,11 @@
+# Ignore node modules
+node_modules/
+
+# Ignore Cypress folders
+cypress/downloads/
+cypress/logs/
+cypress/report/*
+# !cypress/report/**/*.json
+# !cypress/report/**/*.html
+cypress/screenshots/
+cypress/videos/

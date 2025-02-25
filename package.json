@@ -1,0 +1,22 @@
+{
+  "name": "automation-assignment-1",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run --headless --reporter mochawesome",
+    "cy:run:ui": "cypress run --headless --reporter mochawesome --spec \"cypress/e2e/WEB/automateUI.cy.js\"",
+    "cy:run:api": "cypress run --headless --reporter mochawesome --spec \"cypress/e2e/API/apiTest.cy.js\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "cypress": "^14.0.3",
+    "cypress-mochawesome-reporter": "^3.8.2",
+    "dayjs": "^1.11.13",
+    "dayjs-plugin-utc": "^0.1.2"
+  }
+}
