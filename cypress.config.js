@@ -1,6 +1,7 @@
 const { defineConfig } = require("cypress");
 const fs = require('fs');
 const path = require('path');
+const dayjs = require('dayjs');
 
 module.exports = defineConfig({
   e2e: {
@@ -19,13 +20,13 @@ module.exports = defineConfig({
       on('task', {
         logAction({ message, specFile }) {
           const logDirectory = path.join(__dirname, "cypress", "logs");
-          const specName = path.basename(specFile, ".js").replace(/[^a-z0-9]/gi, "_").toLowerCase();
+          const specName = path.basename(specFile, ".cy.js").replace(/[^a-z0-9]/gi, "_").toLowerCase();
 
           if (!global.logFiles) {
             global.logFiles = {};
           }
           if (!global.logFiles[specName]) {
-            const timestamp = new Date().toISOString().split('.')[0].replace(/[:.]/g, '-');
+            const timestamp = dayjs().format('YYYY-MM-DDTHH-mm-ss');
             global.logFiles[specName] = path.join(logDirectory, `log-${specName}-${timestamp}.txt`);
           }
           const logFilePath = global.logFiles[specName];
@@ -53,7 +54,7 @@ module.exports = defineConfig({
     overwrite: false,
     html: true,
     json: false,
-    timestamp: "ddmmyyyy_HHMMss",
+    timestamp: "yyyy-mm-dd'T'HH-MM-ss",
     charts: true,
     embeddedScreenshots: true
   },
