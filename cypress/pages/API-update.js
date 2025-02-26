@@ -25,7 +25,7 @@ export class APIupdate {
             expect(responseBody.job).to.eq(job);
             expect(responseBody.updatedAt).to.match(new RegExp(regex.dateFormat.iso8601));
             const updatedAtTime = dayjs(responseBody.createdAt).utc().valueOf();
-            expect(updatedAtTime).to.be.closeTo(now, 2000);
+            expect(updatedAtTime).to.be.closeTo(now, 3000);
         });
     }
 

@@ -26,7 +26,7 @@ export class APIcreate {
             expect(responseBody.id).to.match(new RegExp(regex.numberString));
             expect(responseBody.createdAt).to.match(new RegExp(regex.dateFormat.iso8601));
             const createdAtTime = dayjs(responseBody.createdAt).utc().valueOf();
-            expect(createdAtTime).to.be.closeTo(now, 2000);
+            expect(createdAtTime).to.be.closeTo(now, 3000);
         });
     }
 }

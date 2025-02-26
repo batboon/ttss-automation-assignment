@@ -19,6 +19,7 @@ export class CommonPage {
     }
 
     ensureArray(input) {
+        // Handle single string & array input
         if (Array.isArray(input)) {
             return input;
         } else if (!Array.isArray(input)) {
