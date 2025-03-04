@@ -3,22 +3,17 @@ const commonPage = new CommonPage();
 
 export class CheckoutPage {
     enterCheckoutInfo(firstName, lastName, postalCode) {
-        cy.task('logAction', {
-            message:
-                `[Info] Entering checkout information:\n
+        commonPage.logInfo(`Entering checkout information:\n
             First name: ${firstName}\n
             Last name: ${lastName}\n
-            Postal: ${postalCode}`,
-            specFile: Cypress.spec.relative
-        }
-        );
+            Postal: ${postalCode}`);
         cy.get('[data-test="firstName"]').type(firstName);
         cy.get('[data-test="lastName"]').type(lastName);
         cy.get('[data-test="postalCode"]').type(postalCode);
     }
 
     continueCheckout() {
-        cy.task('logAction', { message: '[Info] Continuing to checkout..', specFile: Cypress.spec.relative });
+        commonPage.logInfo('Continuing to checkout..');
         cy.get('[data-test="continue"]').click();
     }
 
@@ -27,7 +22,7 @@ export class CheckoutPage {
             const productsInCart = Cypress.env('productsInCart');
             const keywordsArray = commonPage.ensureArray(productsInCart);
 
-            cy.task('logAction', { message: '[Info] Checking items to checkout..', specFile: Cypress.spec.relative });
+            commonPage.logInfo('Checking items to checkout..');
             cy.get('[data-test="inventory-item-name"]').then(($els) => {
                 const actualProductsInCartArray = $els.toArray()
                     .map(
@@ -61,7 +56,7 @@ export class CheckoutPage {
     }
 
     checkSubtotal() {
-        cy.task('logAction', { message: '[Info] Checking price total: Item total', specFile: Cypress.spec.relative });
+        commonPage.logInfo('Checking price total: Item total');
         cy.get('[data-test="subtotal-label"]').invoke('text').then((subtotalLabel) => {
             const actualSubtotal = this.parseFloatFromLabel(subtotalLabel);
             this.calculateSubtotal().then((calculatedSubtotal) => {
@@ -78,7 +73,7 @@ export class CheckoutPage {
     }
 
     checkTax() {
-        cy.task('logAction', { message: '[Info] Checking price total: Tax', specFile: Cypress.spec.relative });
+        commonPage.logInfo('Checking price total: Tax');
         cy.get('[data-test="tax-label"]').invoke('text').then((taxLabel) => {
             const actualTax = this.parseFloatFromLabel(taxLabel);
             this.calculateTax().then((calculatedTax) => {
@@ -97,7 +92,7 @@ export class CheckoutPage {
     }
 
     checkTotal() {
-        cy.task('logAction', { message: '[Info] Checking price total: Total', specFile: Cypress.spec.relative });
+        commonPage.logInfo('Checking price total: Total');
         cy.get('[data-test="total-label"]').invoke('text').then((totalLabel) => {
             const actualTotal = this.parseFloatFromLabel(totalLabel);
             this.calculateTotal().then((calculatedTotal) => {
@@ -107,7 +102,7 @@ export class CheckoutPage {
     }
 
     finishCheckout() {
-        cy.task('logAction', { message: '[Info] Finishing checkout..', specFile: Cypress.spec.relative });
+        commonPage.logInfo('Finishing checkout..');
         cy.get('[data-test="finish"]').click();
         cy.get('[data-test="complete-header"]').should('contain', Cypress.env("web").messages.checkoutComplete.thankYou);
     }

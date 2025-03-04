@@ -8,7 +8,7 @@ export class CartPage {
             const productsInCart = Cypress.env('productsInCart');
             const keywordsArray = commonPage.ensureArray(productsInCart);
 
-            cy.task('logAction', { message: '[Info] Checking items in the cart..', specFile: Cypress.spec.relative });
+            commonPage.logInfo('Checking items in the cart..');
             this.removeProductsFromCart(unwantedProducts);
             return cy.get('[data-test="inventory-item-name"]').then(($els) => {
                 const actualProductsInCartArray = $els.toArray().map(el => el.textContent.trim());
@@ -32,22 +32,22 @@ export class CartPage {
             const productName = itemName.text().trim();
             keywordsArray.some((keyword) => {
                 if (productName.includes(keyword)) {
-                    cy.task('logAction', { message: `[Info] Removing ${productName} from the cart..`, specFile: Cypress.spec.relative });
+                    commonPage.logInfo(`Removing ${productName} from the cart..`);
                     this.clickRemoveButton(itemName);
                     productsRemoved = commonPage.appendToList(productName, productsRemoved);
                     return true;
                 } else if (!productName.includes(keyword)) {
-                    cy.task('logAction', { message: `[Warning] ${productName} is not a ${keyword}.`, specFile: Cypress.spec.relative });
+                    commonPage.logWarning(`${productName} is not a ${keyword}.`);
                 }
             });
         }).then(() => {
             commonPage.updateProductsRemovedFromCart(productsRemoved);
-            cy.task('logAction', { message: `[Info] ${productsRemoved} product(s) removed from the cart.`, specFile: Cypress.spec.relative });
+            commonPage.logInfo(`${productsRemoved} product(s) removed from the cart.`);
         });
     }
 
     checkoutCart() {
-        cy.task('logAction', { message: '[Info] Proceeding to checkout..', specFile: Cypress.spec.relative });
+        commonPage.logInfo('Proceeding to checkout..');
         cy.get('[data-test="checkout"]').click();
     }
 }
