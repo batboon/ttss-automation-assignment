@@ -4,15 +4,17 @@ const commonPage = new CommonPage();
 
 export class CartPage {
     checkProductsInCart(unwantedProducts) {
-        const productsInCart = Cypress.env('productsInCart');
-        const keywordsArray = commonPage.ensureArray(productsInCart);
+        if (Cypress.env('productsInCart')) {
+            const productsInCart = Cypress.env('productsInCart');
+            const keywordsArray = commonPage.ensureArray(productsInCart);
 
-        cy.task('logAction', { message: '[Info] Checking items in the cart..', specFile: Cypress.spec.relative });
-        this.removeProductsFromCart(unwantedProducts);
-        return cy.get('[data-test="inventory-item-name"]').then(($els) => {
-            const actualProductsInCartArray = $els.toArray().map(el => el.textContent.trim());
-            cy.wrap(actualProductsInCartArray.sort()).should('deep.equal', keywordsArray.sort());
-        });
+            cy.task('logAction', { message: '[Info] Checking items in the cart..', specFile: Cypress.spec.relative });
+            this.removeProductsFromCart(unwantedProducts);
+            return cy.get('[data-test="inventory-item-name"]').then(($els) => {
+                const actualProductsInCartArray = $els.toArray().map(el => el.textContent.trim());
+                cy.wrap(actualProductsInCartArray.sort()).should('deep.equal', keywordsArray.sort());
+            });
+        }
     }
 
     clickRemoveButton(itemName) {

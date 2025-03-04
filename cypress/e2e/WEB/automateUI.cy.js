@@ -9,7 +9,7 @@ describe("Assignment 1: Automate UI", () => {
 
     const config = Cypress.env("web");
 
-    it("Automate UI 1: User can buy T-Shirt successfully", async () => {
+    it("Automate UI 1: User can buy T-Shirt successfully", () => {
         cy.task('logAction', { message: '[Info] Test started: User can buy T-Shirt successfully', specFile: Cypress.spec.relative });
 
         // 1. Navigate to homepage and login
@@ -20,10 +20,10 @@ describe("Assignment 1: Automate UI", () => {
             config.loginCredentials.password
         );
 
-        await commonPage.addProductsToCart(config.productKeyword);
-        await commonPage.removeProductsFromCart(config.productKeyword[2]);
+        commonPage.addProductsToCart(config.productKeyword);
+        commonPage.removeProductsFromCart(config.productKeyword[2]);
         commonPage.goToCartScreen();
-        await cartPage.checkProductsInCart(config.productKeyword[2]);
+        cartPage.checkProductsInCart(config.productKeyword[2]);
         cartPage.checkoutCart();
 
         // 4. Enter checkout information and continue to checkout

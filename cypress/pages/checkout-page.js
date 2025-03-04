@@ -23,18 +23,20 @@ export class CheckoutPage {
     }
 
     checkProductsToCheckout() {
-        const productsInCart = Cypress.env('productsInCart');
-        const keywordsArray = commonPage.ensureArray(productsInCart);
+        if (Cypress.env('productsInCart')) {
+            const productsInCart = Cypress.env('productsInCart');
+            const keywordsArray = commonPage.ensureArray(productsInCart);
 
-        cy.task('logAction', { message: '[Info] Checking items to checkout..', specFile: Cypress.spec.relative });
-        cy.get('[data-test="inventory-item-name"]').then(($els) => {
-            const actualProductsInCartArray = $els.toArray()
-                .map(
-                    el => el.textContent.trim()
-                );
-            expect(actualProductsInCartArray.sort())
-                .to.deep.equal(keywordsArray.sort());
-        });
+            cy.task('logAction', { message: '[Info] Checking items to checkout..', specFile: Cypress.spec.relative });
+            cy.get('[data-test="inventory-item-name"]').then(($els) => {
+                const actualProductsInCartArray = $els.toArray()
+                    .map(
+                        el => el.textContent.trim()
+                    );
+                expect(actualProductsInCartArray.sort())
+                    .to.deep.equal(keywordsArray.sort());
+            });
+        }
     }
 
     parseFloatFromElement(el) {

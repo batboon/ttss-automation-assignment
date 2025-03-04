@@ -37,6 +37,14 @@ export class CommonPage {
         return listOfProducts;
     }
 
+    waitForEnvVariable(envVarName) {
+        return cy.wrap(null).should(() => {
+            const value = Cypress.env(envVarName);
+            expect(value).to.not.be.undefined; // Check if the env var is defined
+            expect(value).to.not.be.null; // Check if the env var is not null
+        });
+    }
+
     updateProductsAddedToCart(productsAddedArray) {
         cy.log('Before ' + productsAddedArray);
         if (Cypress.env('productsInCart')) {
@@ -52,7 +60,6 @@ export class CommonPage {
     }
 
     updateProductsRemovedFromCart(productsRemovedArray) {
-
         if (Cypress.env('productsInCart')) {
             const productsInCartArray = Cypress.env('productsInCart');
             cy.log('Before R ' + productsInCartArray);
