@@ -20,9 +20,12 @@ describe("Assignment 1: Automate UI", () => {
             config.loginCredentials.password
         );
 
+        // 2. Look for T-Shirt(s), Flashlight(s), Backpack(s), and add to cart
         commonPage.addProductsToCart(config.productKeyword);
         commonPage.removeProductsFromCart(config.productKeyword[2]);
         commonPage.goToCartScreen();
+
+        // 3. Remove Backpack(s) from cart, check item(s) in cart, remove any unwanted item(s) from cart
         cartPage.checkProductsInCart(config.productKeyword[2]);
         cartPage.checkoutCart();
 
