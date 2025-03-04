@@ -1,5 +1,6 @@
+const config = Cypress.env("web");
+
 export class CommonPage {
-    // Todo: Replace cy.task() with log
     logInfo(text) {
         cy.task('logAction', { message: `[Info] ${text}`, specFile: Cypress.spec.relative });
     }
@@ -46,23 +47,18 @@ export class CommonPage {
     }
 
     updateProductsAddedToCart(productsAddedArray) {
-        cy.log('Before ' + productsAddedArray);
         if (Cypress.env('productsInCart')) {
             const productsInCartArray = Cypress.env('productsInCart');
-            cy.log('First ' + productsInCartArray);
             const updatedCartArray = productsAddedArray.concat(productsInCartArray);
             Cypress.env('productsInCart', updatedCartArray);
-            cy.log('Have ' + Cypress.env('productsInCart'));
         } else {
             Cypress.env('productsInCart', productsAddedArray);
-            cy.log('No have ' + Cypress.env('productsInCart'));
         }
     }
 
     updateProductsRemovedFromCart(productsRemovedArray) {
-        if (Cypress.env('productsInCart')) {
+        cy.then(() => {
             const productsInCartArray = Cypress.env('productsInCart');
-            cy.log('Before R ' + productsInCartArray);
             productsRemovedArray.forEach(item => {
                 let index = productsInCartArray.indexOf(item);
                 if (index !== -1) {
@@ -70,16 +66,23 @@ export class CommonPage {
                 }
             });
             Cypress.env('productsInCart', productsInCartArray);
-            cy.log('After R ' + Cypress.env('productsInCart'));
-        }
+        })
     }
 
-    clickAddToCartButton(itemName) {
+    clickButtonOnItem(button, itemName) {
         cy.wrap(itemName)
             .parentsUntil('.inventory_item')
             .children('.pricebar').children('button')
-            .contains('Add to cart')
+            .contains(button)
             .click();
+    }
+
+    clickAddToCartButton(itemName) {
+        this.clickButtonOnItem(config.buttons.addToCart, itemName);
+    }
+
+    clickRemoveButton(itemName) {
+        this.clickButtonOnItem(config.buttons.remove, itemName);
     }
 
     addProductsToCart(productKeywords) {
@@ -102,14 +105,6 @@ export class CommonPage {
             this.updateProductsAddedToCart(productsAdded);
             this.logInfo(`${productsAdded} product(s) added to the cart.`);
         });
-    }
-
-    clickRemoveButton(itemName) {
-        cy.wrap(itemName)
-            .parentsUntil('.inventory_item')
-            .children('.pricebar').children('button')
-            .contains('Remove')
-            .click();
     }
 
     removeProductsFromCart(productKeywords) {

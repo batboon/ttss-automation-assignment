@@ -1,5 +1,8 @@
 import { CommonPage } from "./common-page";
+
 const commonPage = new CommonPage();
+
+const config = Cypress.env("web");
 
 export class CheckoutPage {
     enterCheckoutInfo(firstName, lastName, postalCode) {
@@ -18,7 +21,7 @@ export class CheckoutPage {
     }
 
     checkProductsToCheckout() {
-        if (Cypress.env('productsInCart')) {
+        cy.then(() => {
             const productsInCart = Cypress.env('productsInCart');
             const keywordsArray = commonPage.ensureArray(productsInCart);
 
@@ -31,7 +34,7 @@ export class CheckoutPage {
                 expect(actualProductsInCartArray.sort())
                     .to.deep.equal(keywordsArray.sort());
             });
-        }
+        })
     }
 
     parseFloatFromElement(el) {
@@ -104,6 +107,6 @@ export class CheckoutPage {
     finishCheckout() {
         commonPage.logInfo('Finishing checkout..');
         cy.get('[data-test="finish"]').click();
-        cy.get('[data-test="complete-header"]').should('contain', Cypress.env("web").messages.checkoutComplete.thankYou);
+        cy.get('[data-test="complete-header"]').should('contain', config.messages.checkoutComplete.thankYou);
     }
 }

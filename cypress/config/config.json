@@ -48,6 +48,10 @@
         "checkoutComplete": {
           "thankYou": "Thank you for your order!"
         }
+      },
+      "buttons": {
+        "addToCart": "Add to cart",
+        "remove": "Remove"
       }
     }
   }

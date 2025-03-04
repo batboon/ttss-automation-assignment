@@ -4,7 +4,7 @@ const commonPage = new CommonPage();
 
 export class CartPage {
     checkProductsInCart(unwantedProducts) {
-        if (Cypress.env('productsInCart')) {
+        cy.then(() => {
             const productsInCart = Cypress.env('productsInCart');
             const keywordsArray = commonPage.ensureArray(productsInCart);
 
@@ -14,15 +14,19 @@ export class CartPage {
                 const actualProductsInCartArray = $els.toArray().map(el => el.textContent.trim());
                 cy.wrap(actualProductsInCartArray.sort()).should('deep.equal', keywordsArray.sort());
             });
-        }
+        })
     }
 
-    clickRemoveButton(itemName) {
+    clickButtonOnCartItem(button, itemName) {
         cy.wrap(itemName)
             .parentsUntil('.inventory_item')
             .children('.item_pricebar').children('button')
-            .contains('Remove')
+            .contains(button)
             .click();
+    }
+
+    clickRemoveButton(itemName) {
+        this.clickButtonOnCartItem(config.buttons.remove, itemName);
     }
 
     removeProductsFromCart(productKeywords) {
