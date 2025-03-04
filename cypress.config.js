@@ -58,6 +58,7 @@ module.exports = defineConfig({
     charts: true,
     embeddedScreenshots: true
   },
+  video: true,
   screenshotOnRunFailure: true,
-  defaultCommandTimeout: 100000
+  defaultCommandTimeout: 10000
 });
