@@ -9,7 +9,7 @@ describe("Assignment 1: Automate UI", () => {
 
     const config = Cypress.env("web");
 
-    it("Automate UI 1: User can buy T-Shirt successfully", () => {
+    it("Automate UI 1: User can buy T-Shirt successfully", async () => {
         cy.task('logAction', { message: '[Info] Test started: User can buy T-Shirt successfully', specFile: Cypress.spec.relative });
 
         // 1. Navigate to homepage and login
@@ -20,46 +20,32 @@ describe("Assignment 1: Automate UI", () => {
             config.loginCredentials.password
         );
 
-        var productsInCart = [];
+        await commonPage.addProductsToCart(config.productKeyword);
+        await commonPage.removeProductsFromCart(config.productKeyword[2]);
+        commonPage.goToCartScreen();
+        await cartPage.checkProductsInCart(config.productKeyword[2]);
+        cartPage.checkoutCart();
 
-        // 2. Look for T-Shirt(s), Flashlight(s), Backpack(s), and add to cart
-        commonPage.addProductsToCart(config.productKeyword).then(() => {
-            productsInCart = commonPage.updateProductsAddedToCart(Cypress.env("productsAdded"), productsInCart);
+        // 4. Enter checkout information and continue to checkout
+        checkoutPage.enterCheckoutInfo(
+            config.personalInfo.firstName,
+            config.personalInfo.lastName,
+            config.personalInfo.postalCode
+        );
 
-            // 3. Remove Backpack(s) from cart, check item(s) in cart, remove any unwanted item(s) from cart
-            commonPage.removeProductsFromCart(config.productKeyword[2]).then(() => {
-                productsInCart = commonPage.updateProductsRemovedFromCart(Cypress.env("productsRemoved"), productsInCart);
+        checkoutPage.continueCheckout();
 
-                commonPage.goToCartScreen();
+        // 5. Check item(s) to checkout and price calculations
+        checkoutPage.checkProductsToCheckout();
 
-                cartPage.checkProductsInCart(productsInCart, config.productKeyword[2]).then(() => {
-                    productsInCart = commonPage.updateProductsRemovedFromCart(Cypress.env("productsRemoved"), productsInCart);
+        checkoutPage.checkSubtotal();
+        checkoutPage.checkTax();
+        checkoutPage.checkTotal();
 
-                    cartPage.checkoutCart();
+        // 6. Finish order checkout and verify order completion screen
+        checkoutPage.finishCheckout();
 
-                    // 4. Enter checkout information and continue to checkout
-                    checkoutPage.enterCheckoutInfo(
-                        config.personalInfo.firstName,
-                        config.personalInfo.lastName,
-                        config.personalInfo.postalCode
-                    );
-
-                    checkoutPage.continueCheckout();
-
-                    // 5. Check item(s) to checkout and price calculations
-                    checkoutPage.checkProductsToCheckout(productsInCart);
-
-                    checkoutPage.checkSubtotal();
-                    checkoutPage.checkTax();
-                    checkoutPage.checkTotal();
-
-                    // 6. Finish order checkout and verify order completion screen
-                    checkoutPage.finishCheckout();
-
-                    // End of test
-                    cy.task('logAction', { message: '[Success] Test completed: User can buy T-Shirt successfully', specFile: Cypress.spec.relative });
-                });
-            });
-        });
+        // End of test
+        cy.task('logAction', { message: '[Success] Test completed: User can buy T-Shirt successfully', specFile: Cypress.spec.relative });
     })
 })

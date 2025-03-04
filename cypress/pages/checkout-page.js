@@ -22,8 +22,9 @@ export class CheckoutPage {
         cy.get('[data-test="continue"]').click();
     }
 
-    checkProductsToCheckout(expectedCart) {
-        const keywordsArray = commonPage.ensureArray(expectedCart);
+    checkProductsToCheckout() {
+        const productsInCart = Cypress.env('productsInCart');
+        const keywordsArray = commonPage.ensureArray(productsInCart);
 
         cy.task('logAction', { message: '[Info] Checking items to checkout..', specFile: Cypress.spec.relative });
         cy.get('[data-test="inventory-item-name"]').then(($els) => {
@@ -87,7 +88,7 @@ export class CheckoutPage {
     calculateTotal() {
         return this.calculateSubtotal().then((calculatedSubtotal) => {
             return this.calculateTax().then((calculatedTax) => {
-                const calculatedTotal = calculatedSubtotal + calculatedTax;
+                const calculatedTotal = parseFloat((calculatedSubtotal + calculatedTax).toFixed(2));
                 return calculatedTotal;
             });
         });

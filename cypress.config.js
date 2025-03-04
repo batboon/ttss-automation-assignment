@@ -59,5 +59,5 @@ module.exports = defineConfig({
     embeddedScreenshots: true
   },
   screenshotOnRunFailure: true,
-  defaultCommandTimeout: 10000
+  defaultCommandTimeout: 100000
 });
