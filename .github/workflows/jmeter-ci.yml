@@ -41,15 +41,8 @@ jobs:
 
       - name: Add JMeter to PATH, Verify Installation, And Run JMeter Tests
         run: |
-          export JMETER_HOME=/opt/jmeter
-          export PATH=$PATH:$JMETER_HOME/bin
-          echo $PATH
           jmeter -v
           jmeter -n -t tests/test_plan.jmx -l results/result.jtl -e -o reports/
-
-      - name: Check JMeter Installation Directory
-        run: |
-          ls /opt/jmeter/bin
 
       - name: List result files
         run: ls -R /results/
