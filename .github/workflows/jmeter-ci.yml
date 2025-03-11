@@ -47,11 +47,11 @@ jobs:
           jmeter -v
           jmeter -n -t tests/test_plan.jmx -l results/result.jtl -e -o reports/
 
-      - name: List result file
-        run: ls -R results/.jtl
+      - name: List results folder
+        run: ls -R results/
 
-      - name: List report JSON file
-        run: ls -R reports/.json
+      - name: List reports folder
+        run: ls -R reports/
 
       - name: Upload JMeter Results as Artifacts
         uses: actions/upload-artifact@v4
