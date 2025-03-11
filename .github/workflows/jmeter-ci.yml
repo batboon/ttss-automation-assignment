@@ -31,15 +31,19 @@ jobs:
 
       - name: Install JMeter Plugins Manager
         run: |
-          wget https://jmeter-plugins.org/get/ -O /opt/jmeter/bin/jmeter-plugins-manager.jar
-          java -cp /opt/jmeter/bin/jmeter-plugins-manager.jar:$(ls /opt/jmeter/lib/ext/*.jar | tr '\n' ':') org.jmeterplugins.repository.PluginManagerCMD
-          # java -cp opt/jmeter/bin/jmeter-plugins-manager.jar org.jmeterplugins.repository.PluginManagerCMD install kg.apc.jmeter.threads.SteppingThreadGroup
+          wget https://jmeter-plugins.org/get/ -O /opt/jmeter/lib/ext/jmeter-plugins-manager.jar
+
+      - name: Install JMeter Plugins CLI runner & Stepping Thread Group
+        run: |
+          wget https://repo1.maven.org/maven2/kg/apc/cmdrunner/2.2/cmdrunner-2.2.jar -P /opt/jmeter/lib/
+          java -cp /opt/jmeter/lib/ext/jmeter-plugins-manager.jar org.jmeterplugins.repository.PluginManagerCMDInstaller
+          java -cp /opt/jmeter/bin/./PluginsManagerCMD.sh install kg.apc.jmeter.threads.SteppingThreadGroup
 
       - name: Add JMeter to PATH, Verify Installation, And Run JMeter Tests
         run: |
-          export JMETER_HOME=/opt/jmeter
-          export PATH=$PATH:$JMETER_HOME/bin
-          echo $PATH
+          # export JMETER_HOME=/opt/jmeter
+          # export PATH=$PATH:$JMETER_HOME/bin
+          # echo $PATH
           jmeter -v
           jmeter -n -t tests/test_plan.jmx -l results/result.jtl -e -o reports/
 
