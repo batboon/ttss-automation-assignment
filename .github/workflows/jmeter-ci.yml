@@ -72,11 +72,13 @@ jobs:
           curl -v -X POST \
             -H "Content-Type: application/json" \
             -H "DD-API-KEY: ${{ secrets.DATADOG_API_KEY }}" \
+            -H "Content-Encoding: gzip" \
             --data-binary  @results/result.jtl \
             "https://http-intake.logs.datadoghq.com/api/v2/logs"
 
           curl -X POST \
             -H "Content-Type: application/json" \
             -H "DD-API-KEY: ${{ secrets.DATADOG_API_KEY }}" \
+            -H "Content-Encoding: gzip" \
             -d @reports/statistics.json \
             "https://http-intake.logs.datadoghq.com/api/v2/logs"
