@@ -66,7 +66,7 @@ jobs:
         run: |
           curl -X GET "https://api.datadoghq.com/api/v1/validate" \
             -H "Accept: application/json" \
-            -H "DD-API-KEY: ${ secrets.DATADOG_API_KEY }"
+            -H "DD-API-KEY: ${{ secrets.DATADOG_API_KEY }}"
 
       - name: Install gzip
         run: sudo apt-get install gzip
