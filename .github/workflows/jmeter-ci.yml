@@ -81,5 +81,5 @@ jobs:
             -H "Content-Type: application/json" \
             -H "DD-API-KEY: ${{ secrets.DATADOG_API_KEY }}" \
             -H "Content-Encoding: gzip" \
-            -d @reports/statistics.json.gz \
+            --data-binary  @reports/statistics.json.gz \
             "https://http-intake.logs.us5.datadoghq.com/api/v2/logs"
