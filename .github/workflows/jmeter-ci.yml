@@ -80,13 +80,11 @@ jobs:
           curl -v -X POST \
             -H "Content-Type: application/json" \
             -H "DD-API-KEY: ${{ secrets.DATADOG_API_KEY }}" \
-            -H "Content-Encoding: gzip" \
             --data '{"message": "This is a test log", "status": "success"}' \
             "https://http-intake.logs.datadoghq.com/api/v2/logs"
 
           curl -X POST \
             -H "Content-Type: application/json" \
             -H "DD-API-KEY: ${{ secrets.DATADOG_API_KEY }}" \
-            -H "Content-Encoding: gzip" \
             --data '{"message": "This is a test log 2", "status": "success"}' \
             "https://http-intake.logs.datadoghq.com/api/v2/logs"
