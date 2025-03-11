@@ -47,11 +47,8 @@ jobs:
           jmeter -v
           jmeter -n -t tests/test_plan.jmx -l result.jtl -e -o reports/
 
-      - name: List result files
-        run: ls -R
-
       - name: List JTL files
-        run: find /home/runner/work/boon-cypress-practice-one/boon-cypress-practice-one/results/ -name '*.jtl'
+        run: find -name '*.jtl'
 
       - name: List report files
         run: ls -R /home/runner/work/boon-cypress-practice-one/boon-cypress-practice-one/reports/.html
