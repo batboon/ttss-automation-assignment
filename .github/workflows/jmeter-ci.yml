@@ -32,8 +32,8 @@ jobs:
       - name: Install JMeter Plugins Manager
         run: |
           wget https://jmeter-plugins.org/get/ -O /opt/jmeter/bin/jmeter-plugins-manager.jar
-          java -cp /opt/jmeter/bin/jmeter-plugins-manager.jar org.jmeterplugins.repository.PluginManagerCMD
-          java -cp /opt/jmeter/bin/jmeter-plugins-manager.jar org.jmeterplugins.repository.PluginManagerCMD install kg.apc.jmeter.threads.SteppingThreadGroup
+          java -cp opt/jmeter/bin/jmeter-plugins-manager.jar org.jmeterplugins.repository.PluginManagerCMD
+          java -cp opt/jmeter/bin/jmeter-plugins-manager.jar org.jmeterplugins.repository.PluginManagerCMD install kg.apc.jmeter.threads.SteppingThreadGroup
 
       - name: Install Stepping Thread Group plugin
         run: |
