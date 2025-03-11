@@ -52,7 +52,7 @@ jobs:
           ls /opt/jmeter/bin
 
       - name: List result files
-        run: ls -R /home/runner/work/boon-cypress-practice-one/boon-cypress-practice-one/results/.jtls
+        run: ls -R /home/runner/work/boon-cypress-practice-one/boon-cypress-practice-one/results/
 
       - name: List JTL files
         run: find /home/runner/work/boon-cypress-practice-one/boon-cypress-practice-one/results/ -name '*.jtl'
