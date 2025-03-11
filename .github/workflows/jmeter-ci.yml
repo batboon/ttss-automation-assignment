@@ -29,6 +29,15 @@ jobs:
           sudo mv apache-jmeter-5.6.3 /opt/jmeter
           echo "JMeter installed at /opt/jmeter"
 
+      - name: Install JMeter Plugins Manager
+        run: |
+          wget https://jmeter-plugins.org/downloads/all/ -O /opt/jmeter/bin/jmeter-plugins-manager.jar
+          java -cp /opt/jmeter/bin/jmeter-plugins-manager.jar org.jmeterplugins.repository.PluginManagerCMD
+
+      - name: Install Stepping Thread Group plugin
+        run: |
+          java -cp /opt/jmeter/bin/jmeter-plugins-manager.jar org.jmeterplugins.repository.PluginManagerCMD install kg.apc.jmeter.threads.SteppingThreadGroup
+
       - name: Add JMeter to PATH, Verify Installation, And Run JMeter Tests
         run: |
           export JMETER_HOME=/opt/jmeter
