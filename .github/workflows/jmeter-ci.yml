@@ -45,10 +45,10 @@ jobs:
           export PATH=$PATH:$JMETER_HOME/bin
           echo $PATH
           jmeter -v
-          jmeter -n -t tests/test_plan.jmx -l result.jtl -e -o reports/
+          jmeter -n -t tests/test_plan.jmx -l results/result.jtl -e -o reports/
 
-      - name: List JTL files
-        run: find -name '*.jtl'
+      - name: List result files
+        run: ls -R results/
 
       - name: List report files
         run: ls -R reports/
