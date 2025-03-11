@@ -44,6 +44,8 @@ jobs:
           export JMETER_HOME=/opt/jmeter
           export PATH=$PATH:$JMETER_HOME/bin
           echo $PATH
+          jmeter.sh -v
+          jmeter -n -t tests/test_plan.jmx -l results/result.jtl -e -o reports/
 
       - name: Check JMeter Installation Directory
         run: |
