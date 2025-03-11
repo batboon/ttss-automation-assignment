@@ -27,9 +27,8 @@ jobs:
           wget https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.6.3.tgz
           tar -xvzf apache-jmeter-5.6.3.tgz
           sudo mv apache-jmeter-5.6.3 /opt/jmeter
-          echo "export JMETER_HOME=/opt/jmeter" >> ~/.bashrc
-          echo "export PATH=\$PATH:\$JMETER_HOME/bin" >> ~/.bashrc
-          source ~/.bashrc
+          echo "export JMETER_HOME=/opt/jmeter" >> $GITHUB_ENV
+          echo "export PATH=\$PATH:\$JMETER_HOME/bin" >> $GITHUB_ENV
 
       - name: Check JMeter Version
         run: |
