@@ -51,7 +51,7 @@ jobs:
         run: find -name '*.jtl'
 
       - name: List report files
-        run: ls -R /home/runner/work/boon-cypress-practice-one/boon-cypress-practice-one/reports/.html
+        run: ls -R reports/
 
       - name: List HTML files
         run: find /home/runner/work/boon-cypress-practice-one/boon-cypress-practice-one/reports/ -name '*.html'
@@ -61,12 +61,12 @@ jobs:
         with:
           name: jmeter-results
           include-hidden-files: true
-          path: results/
+          path: result.jtl
 
       - name: Send JMeter Results to Datadog via API
         run: |
           curl -X POST \
             -H "Content-Type: application/json" \
             -H "DD-API-KEY: ${{ secrets.DATADOG_API_KEY }}" \
-            -d @results/result.jtl \
+            -d @result.jtl \
             "https://api.datadoghq.com/api/v1/logs"
