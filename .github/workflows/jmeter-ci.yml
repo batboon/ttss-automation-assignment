@@ -62,6 +62,9 @@ jobs:
             results/result.jtl
             reports/statistics.json
 
+      - name: Debug Datadog API Key
+        run: echo "DATADOG_API_KEY=${{ secrets.DATADOG_API_KEY }}"
+
       - name: Send JMeter Result and Summary to Datadog via API
         run: |
           curl -X POST \
