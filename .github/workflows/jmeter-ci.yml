@@ -64,8 +64,7 @@ jobs:
 
       - name: Test Datadog API Key
         run: |
-          curl -X GET "https://api.datadoghq.com/api/v1/validate" \
-            -H "Accept: application/json" \
+          curl -v -X GET "https://api.us5.datadoghq.com/api/v1/validate" \
             -H "DD-API-KEY: ${{ secrets.DATADOG_API_KEY }}"
 
       - name: Install gzip
@@ -81,11 +80,13 @@ jobs:
           curl -v -X POST \
             -H "Content-Type: application/json" \
             -H "DD-API-KEY: ${{ secrets.DATADOG_API_KEY }}" \
-            --data '{"message": "This is a test log", "status": "success"}' \
-            "https://http-intake.logs.datadoghq.com/api/v2/logs"
+            -H "Content-Encoding: gzip" \
+            --data-binary  @results/result.jtl.gz \
+            "https://http-intake.logs.us5.datadoghq.com/api/v2/logs"
 
           curl -X POST \
             -H "Content-Type: application/json" \
             -H "DD-API-KEY: ${{ secrets.DATADOG_API_KEY }}" \
-            --data '{"message": "This is a test log 2", "status": "success"}' \
-            "https://http-intake.logs.datadoghq.com/api/v2/logs"
+            -H "Content-Encoding: gzip" \
+            -d @reports/statistics.json.gz \
+            "https://http-intake.logs.us5.datadoghq.com/api/v2/logs"
