@@ -64,8 +64,7 @@ jobs:
 
       - name: Test Datadog API Key
         run: |
-          curl -v -X GET "https://api.datadoghq.com/api/v1/check_run" \
-            -H "DD-API-KEY: ${{ secrets.DATADOG_API_KEY }}"
+          curl -v -X GET "https://api.datadoghq.com/api/v1/validate?api_key=${{ secrets.DATADOG_API_KEY }}" \
 
       - name: Install gzip
         run: sudo apt-get install gzip
