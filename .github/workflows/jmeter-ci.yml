@@ -45,6 +45,10 @@ jobs:
           export PATH=$PATH:$JMETER_HOME/bin
           echo $PATH
 
+      - name: Check JMeter Installation Directory
+        run: |
+          ls /opt/jmeter/bin
+
       - name: List result files
         run: ls -R /home/runner/work/boon-cypress-practice-one/boon-cypress-practice-one/results/.jtls
 
