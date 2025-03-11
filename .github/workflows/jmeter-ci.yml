@@ -64,12 +64,12 @@ jobs:
 
       - name: Test Datadog API Key
         run: |
-          curl -X GET "https://api.datadoghq.com/api/v1/check_run" \
+          curl -v -X GET "https://api.datadoghq.com/api/v1/check_run" \
             -H "DD-API-KEY: ${{ secrets.DATADOG_API_KEY }}"
 
       - name: Send JMeter Result and Summary to Datadog via API
         run: |
-          curl -X POST \
+          curl -v -X POST \
             -H "Content-Type: application/json" \
             -H "DD-API-KEY: ${{ secrets.DATADOG_API_KEY }}" \
             --data-binary  @results/result.jtl \
