@@ -29,16 +29,12 @@ jobs:
           sudo mv apache-jmeter-5.6.3 /opt/jmeter
           echo "JMeter installed at /opt/jmeter"
 
-      - name: Add JMeter to PATH and Verify Installation
+      - name: Add JMeter to PATH, Verify Installation, And Run JMeter Tests
         run: |
           export JMETER_HOME=/opt/jmeter
           export PATH=$PATH:$JMETER_HOME/bin
           echo $PATH
           jmeter -v
-
-      # Run the JMeter test plan in non-GUI mode
-      - name: Run JMeter Tests
-        run: |
           jmeter -n -t tests/test_plan.jmx -l results/result.jtl -e -o reports/
 
       - name: List result files
