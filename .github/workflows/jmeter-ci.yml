@@ -32,6 +32,7 @@ jobs:
 
       - name: Check JMeter Version
         run: |
+          echo $PATH
           jmeter -v
 
       # Run the JMeter test plan in non-GUI mode
