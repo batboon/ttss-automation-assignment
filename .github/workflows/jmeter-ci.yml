@@ -20,7 +20,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: "11" # Set the Java version according to your JMeter requirements
-          distribution: "adoptopenjdk"
+          distribution: "temurin"
 
       # Install JMeter on the runner
       - name: Install JMeter
