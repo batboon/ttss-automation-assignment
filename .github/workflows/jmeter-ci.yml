@@ -35,7 +35,7 @@ jobs:
 
       - name: Install JMeter Plugins CLI runner & Stepping Thread Group
         run: |
-          wget https://repo1.maven.org/maven2/kg/apc/cmdrunner/2.2/cmdrunner-2.2.jar -P /opt/jmeter/lib/
+          wget https://repo1.maven.org/maven2/kg/apc/cmdrunner/2.3/cmdrunner-2.3.jar -P /opt/jmeter/lib/
           java -cp /opt/jmeter/lib/ext/jmeter-plugins-manager.jar org.jmeterplugins.repository.PluginManagerCMDInstaller
           /opt/jmeter/bin/./PluginsManagerCMD.sh install kg.apc.jmeter.threads.SteppingThreadGroup
 
