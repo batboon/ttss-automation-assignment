@@ -68,10 +68,10 @@ jobs:
             -H "Content-Type: application/json" \
             -H "DD-API-KEY: ${{ secrets.DATADOG_API_KEY }}" \
             --data-binary  @results/result.jtl \
-            "https://api.datadoghq.com/api/v1/logs"
+            "https://http-intake.logs.datadoghq.com/v1/input"
 
           curl -X POST \
             -H "Content-Type: application/json" \
             -H "DD-API-KEY: ${{ secrets.DATADOG_API_KEY }}" \
             -d @reports/statistics.json \
-            "https://api.datadoghq.com/api/v1/logs"
+            "https://http-intake.logs.datadoghq.com/v1/input"
