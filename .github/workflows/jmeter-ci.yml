@@ -22,11 +22,14 @@ jobs:
           java-version: "11" # Set the Java version according to your JMeter requirements
           distribution: "temurin"
 
-      # Install JMeter on the runner
-      - name: Install JMeter
+      - name: Install JMeter 5.6.3 from Apache Distribution
         run: |
-          sudo apt-get update
-          sudo apt-get install -y jmeter
+          wget https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.6.3.tgz
+          tar -xvzf apache-jmeter-5.6.3.tgz
+          sudo mv apache-jmeter-5.6.3 /opt/jmeter
+          echo "export JMETER_HOME=/opt/jmeter" >> ~/.bashrc
+          echo "export PATH=\$PATH:\$JMETER_HOME/bin" >> ~/.bashrc
+          source ~/.bashrc
 
       - name: Check JMeter Version
         run: |
