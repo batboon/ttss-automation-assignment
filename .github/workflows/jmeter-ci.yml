@@ -64,7 +64,7 @@ jobs:
 
       - name: Test Datadog API Key
         run: |
-          curl -X GET "http-intake-pci.logs.datadoghq.com" \
+          curl -X GET "https://http-intake.logs.datadoghq.com/v1/input" \
             -H "DD-API-KEY: ${{ secrets.DATADOG_API_KEY }}"
 
       - name: Send JMeter Result and Summary to Datadog via API
