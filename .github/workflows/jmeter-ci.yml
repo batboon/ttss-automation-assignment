@@ -1,0 +1,48 @@
+name: JMeter Performance Tests
+
+on:
+  push:
+    branches:
+      - main # Trigger on push to main branch (or any branch you prefer)
+  pull_request:
+    branches:
+      - main # Trigger on PR targeting main branch
+
+jobs:
+  jmeter-test:
+    runs-on: ubuntu-latest # Specify your runner (ubuntu-latest is common)
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3 # Checks out your code to the runner
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: "11" # Set the Java version according to your JMeter requirements
+
+      # Install JMeter on the runner
+      - name: Install JMeter
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jmeter
+
+      # Run the JMeter test plan in non-GUI mode
+      - name: Run JMeter Tests
+        run: |
+          jmeter -n -t tests/test_plan.jmx -l results/result.jtl -e -o reports/
+
+      - name: Upload JMeter Results as Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: jmeter-results
+          include-hidden-files: true
+          path: results/
+
+      - name: Send JMeter Results to Datadog via API
+        run: |
+          curl -X POST \
+            -H "Content-Type: application/json" \
+            -H "DD-API-KEY: ${{ secrets.DATADOG_API_KEY }}" \
+            -d @results/result.jtl \
+            "https://api.datadoghq.com/api/v1/logs"
