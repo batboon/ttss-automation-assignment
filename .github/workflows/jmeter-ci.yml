@@ -67,18 +67,26 @@ jobs:
           curl -v -X GET "https://api.datadoghq.com/api/v1/check_run" \
             -H "DD-API-KEY: ${{ secrets.DATADOG_API_KEY }}"
 
+      - name: Install gzip
+        run: sudo apt-get install gzip
+
+      - name: Compress JTL and JSON file with gzip
+        run: |
+          gzip -k results/result.jtl
+          gzip -k reports/statistics.json
+
       - name: Send JMeter Result and Summary to Datadog via API
         run: |
           curl -v -X POST \
             -H "Content-Type: application/json" \
             -H "DD-API-KEY: ${{ secrets.DATADOG_API_KEY }}" \
             -H "Content-Encoding: gzip" \
-            --data-binary  @results/result.jtl \
+            --data-binary  @results/result.jtl.gz \
             "https://http-intake.logs.datadoghq.com/api/v2/logs"
 
           curl -X POST \
             -H "Content-Type: application/json" \
             -H "DD-API-KEY: ${{ secrets.DATADOG_API_KEY }}" \
             -H "Content-Encoding: gzip" \
-            -d @reports/statistics.json \
+            -d @reports/statistics.json.gz \
             "https://http-intake.logs.datadoghq.com/api/v2/logs"
