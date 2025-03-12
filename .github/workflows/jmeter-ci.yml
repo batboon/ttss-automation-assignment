@@ -47,6 +47,11 @@ jobs:
           jmeter -v
           jmeter -n -t tests/test_plan.jmx -l results/result.jtl -e -o reports/
 
+      - name: Generate aggregated report
+        run: |
+          /opt/jmeter/bin/./PluginsManagerCMD.sh install jpgc-synthesis
+          /opt/jmeter/bin/./PluginsManagerCMD.sh --plugin-type AggregateReport --input-jtl results.jlt --generate-csv reports/aggregate_report.csv
+
       - name: Upload JMeter Results as Artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -55,6 +60,7 @@ jobs:
           path: |
             results/result.jtl
             reports/statistics.json
+            reports/aggregate_report.csv
 
       - name: Test Datadog API Key
         run: |
@@ -68,6 +74,7 @@ jobs:
         run: |
           gzip -k results/result.jtl
           gzip -k reports/statistics.json
+          gzip -k reports/aggregate_report.csv
 
       - name: Send JMeter Result and Summary to Datadog via API
         run: |
@@ -76,6 +83,13 @@ jobs:
             -H "DD-API-KEY: ${{ secrets.DATADOG_API_KEY }}" \
             -H "Content-Encoding: gzip" \
             --data-binary  @results/result.jtl.gz \
+            "https://http-intake.logs.us5.datadoghq.com/api/v2/logs"
+
+          curl -X POST \
+            -H "Content-Type: application/json" \
+            -H "DD-API-KEY: ${{ secrets.DATADOG_API_KEY }}" \
+            -H "Content-Encoding: gzip" \
+            --data-binary  @reports/aggregate_report.csv.gz \
             "https://http-intake.logs.us5.datadoghq.com/api/v2/logs"
 
           curl -X POST \
