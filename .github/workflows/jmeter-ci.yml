@@ -37,13 +37,13 @@ jobs:
       - name: Install JMeter CMD Runner
         run: |
           /opt/jmeter/bin/PluginsManagerCMD.sh install jpgc-cmd
-
-      - name: Install JMeter Plugins CLI runner & Stepping Thread Group
-        run: |
           wget https://repo1.maven.org/maven2/kg/apc/cmdrunner/2.3/cmdrunner-2.3.jar -P /opt/jmeter/lib/
           ls -l /opt/jmeter/lib/
           ls -l /opt/jmeter/lib/ext/
           ls -l /opt/jmeter/bin/
+
+      - name: Install JMeter Plugins CLI runner & Stepping Thread Group
+        run: |
           /opt/jmeter/bin/PluginsManagerCMD.sh install jpgc-casutg
           /opt/jmeter/bin/PluginsManagerCMD.sh install jpgc-synthesis
 
@@ -57,6 +57,9 @@ jobs:
 
       - name: Generate aggregated report
         run: |
+          ls -l /opt/jmeter/lib/
+          ls -l /opt/jmeter/lib/ext/
+          ls -l /opt/jmeter/bin/
           cat /opt/jmeter/bin/JMeterPluginsCMD.sh
           /opt/jmeter/bin/JMeterPluginsCMD.sh --plugin-type AggregateReport --input-jtl results/result.jtl --generate-csv reports/aggregate_report.csv
 
