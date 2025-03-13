@@ -50,7 +50,7 @@ jobs:
       - name: Generate aggregated report
         run: |
           /opt/jmeter/bin/PluginsManagerCMD.sh install jpgc-synthesis
-          /opt/jmeter/bin/PluginsManagerCMD.sh --generate-csv reports/aggregate_report.csv --input-jtl results.jtl --plugin-type AggregateReport
+          /opt/jmeter/bin/PluginsManagerCMD.sh generate-csv reports/aggregate_report.csv --input-jtl results.jtl --plugin-type AggregateReport
 
       - name: Upload JMeter Results as Artifacts
         uses: actions/upload-artifact@v4
