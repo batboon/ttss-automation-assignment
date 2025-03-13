@@ -63,11 +63,15 @@ jobs:
           /opt/jmeter/bin/JMeterPluginsCMD.sh --plugin-type AggregateReport --input-jtl results/result.jtl --generate-csv reports/aggregate_report.csv
 
       - name: Convert CSV to JSON
-        run: python3 scripts/convert_csv_to_json.py
+        run: |
+          ls -l /results/
+          python3 scripts/convert_csv_to_json.py
           ls -l /results/
 
       - name: Convert JTL to JSON
-        run: python3 scripts/convert_jtl_to_json.py
+        run: |
+          ls -l /results/
+          python3 scripts/convert_jtl_to_json.py
           ls -l /results/
 
       - name: Upload JMeter Results as Artifacts
