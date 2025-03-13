@@ -37,7 +37,7 @@ jobs:
         run: |
           wget https://repo1.maven.org/maven2/kg/apc/cmdrunner/2.3/cmdrunner-2.3.jar -P /opt/jmeter/lib/
           java -cp /opt/jmeter/lib/ext/jmeter-plugins-manager.jar org.jmeterplugins.repository.PluginManagerCMDInstaller
-          /opt/jmeter/bin/./PluginsManagerCMD.sh install jpgc-casutg
+          /opt/jmeter/bin/PluginsManagerCMD.sh install jpgc-casutg
 
       - name: Add JMeter to PATH, Verify Installation, And Run JMeter Tests
         run: |
@@ -49,8 +49,8 @@ jobs:
 
       - name: Generate aggregated report
         run: |
-          /opt/jmeter/bin/./PluginsManagerCMD.sh install jpgc-synthesis
-          /opt/jmeter/bin/./PluginsManagerCMD.sh --plugin-type AggregateReport --input-jtl results.jlt --generate-csv reports/aggregate_report.csv
+          /opt/jmeter/bin/PluginsManagerCMD.sh install jpgc-synthesis
+          /opt/jmeter/bin/JMeterPluginsCMD.sh --generate-csv reports/aggregate_report.csv --input-jtl results.jtl --plugin-type AggregateReport
 
       - name: Upload JMeter Results as Artifacts
         uses: actions/upload-artifact@v4
