@@ -106,6 +106,8 @@ jobs:
             -H "Content-Type: application/json" \
             -H "DD-API-KEY: ${{ secrets.DATADOG_API_KEY }}" \
             -H "Content-Encoding: gzip" \
+            -H "ddsource: jmeter" \
+            -H "service: jmeter-load-test" \
             --data-binary  @results/result.json.gz \
             "https://http-intake.logs.us5.datadoghq.com/api/v2/logs"
 
@@ -113,6 +115,8 @@ jobs:
             -H "Content-Type: application/json" \
             -H "DD-API-KEY: ${{ secrets.DATADOG_API_KEY }}" \
             -H "Content-Encoding: gzip" \
+            -H "ddsource: jmeter" \
+            -H "service: jmeter-load-test" \
             --data-binary  @reports/aggregate_report.json.gz \
             "https://http-intake.logs.us5.datadoghq.com/api/v2/logs"
 
@@ -120,5 +124,7 @@ jobs:
             -H "Content-Type: application/json" \
             -H "DD-API-KEY: ${{ secrets.DATADOG_API_KEY }}" \
             -H "Content-Encoding: gzip" \
+            -H "ddsource: jmeter" \
+            -H "service: jmeter-load-test" \
             --data-binary  @reports/statistics.json.gz \
             "https://http-intake.logs.us5.datadoghq.com/api/v2/logs"
