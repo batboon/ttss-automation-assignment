@@ -46,7 +46,6 @@ jobs:
       - name: Install JMeter Plugins CLI runner & Stepping Thread Group
         run: |
           /opt/jmeter/bin/PluginsManagerCMD.sh install jpgc-casutg
-          /opt/jmeter/bin/PluginsManagerCMD.sh install jpgc-synthesis
 
       - name: Add JMeter to PATH, Verify Installation, And Run JMeter Tests
         run: |
