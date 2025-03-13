@@ -35,12 +35,15 @@ jobs:
 
       - name: Install JMeter CMD Runner
         run: |
-          wget https://repo1.maven.org/maven2/kg/apc/cmdrunner/2.3/cmdrunner-2.3.jar -P /opt/jmeter/lib/
-          java -cp /opt/jmeter/lib/ext/jmeter-plugins-manager.jar:/opt/jmeter/lib/cmdrunner-2.3.jar org.jmeterplugins.repository.PluginManagerCMDInstaller
+          /opt/jmeter/bin/PluginsManagerCMD.sh install jpgc-cmd
 
       - name: Install JMeter Plugins CLI runner & Stepping Thread Group
         run: |
-          wget https://repo1.maven.org/maven2/kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar -P /opt/jmeter/lib/
+          wget https://repo1.maven.org/maven2/kg/apc/cmdrunner/2.3/cmdrunner-2.3.jar -P /opt/jmeter/lib/
+          java -cp /opt/jmeter/lib/ext/jmeter-plugins-manager.jar:/opt/jmeter/lib/cmdrunner-2.3.jar org.jmeterplugins.repository.PluginManagerCMDInstaller
+          ls -l /opt/jmeter/lib/
+          ls -l /opt/jmeter/lib/ext/
+          ls -l /opt/jmeter/bin/
           /opt/jmeter/bin/PluginsManagerCMD.sh install jpgc-casutg
           /opt/jmeter/bin/PluginsManagerCMD.sh install jpgc-synthesis
 
@@ -54,9 +57,6 @@ jobs:
 
       - name: Generate aggregated report
         run: |
-          ls -l /opt/jmeter/lib/
-          ls -l /opt/jmeter/lib/ext/
-          ls -l /opt/jmeter/bin/
           cat /opt/jmeter/bin/JMeterPluginsCMD.sh
           /opt/jmeter/bin/JMeterPluginsCMD.sh --plugin-type AggregateReport --input-jtl results/result.jtl --generate-csv reports/aggregate_report.csv
 
