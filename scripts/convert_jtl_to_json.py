@@ -8,5 +8,5 @@ def jtl_to_json(jtl_file):
     return json.dumps(result, indent=4)
 
 # Write to JSON file
-with open('output.json', 'w', encoding='utf-8') as json_file:
+with open('results/result.json', 'w', encoding='utf-8') as json_file:
     json_file.write(jtl_to_json('results/result.jtl'))

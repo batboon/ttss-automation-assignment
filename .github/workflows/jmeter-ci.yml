@@ -64,9 +64,9 @@ jobs:
 
       - name: Convert CSV to JSON
         run: |
-          ls -l results/
+          ls -l reports/
           python3 scripts/convert_csv_to_json.py
-          ls -l results/
+          ls -l reports/
 
       - name: Convert JTL to JSON
         run: |
