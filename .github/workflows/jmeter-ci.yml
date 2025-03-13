@@ -80,8 +80,10 @@ jobs:
           name: jmeter-results
           include-hidden-files: true
           path: |
+            results/result.jtl
             results/result.json
             reports/statistics.json
+            reports/aggregate_report.csv
             reports/aggregate_report.json
 
       - name: Test Datadog API Key
