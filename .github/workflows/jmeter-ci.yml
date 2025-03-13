@@ -57,6 +57,7 @@ jobs:
 
       - name: Generate aggregated report
         run: |
+          cat /opt/jmeter/bin/JMeterPluginsCMD.sh
           /opt/jmeter/bin/JMeterPluginsCMD.sh --plugin-type AggregateReport --input-jtl results/result.jtl --generate-csv reports/aggregate_report.csv
 
       - name: Upload JMeter Results as Artifacts
