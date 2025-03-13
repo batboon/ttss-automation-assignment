@@ -43,7 +43,7 @@ jobs:
 
       - name: Install JMeter Plugins CLI runner & Stepping Thread Group
         run: |
-          wget https://jmeter-plugins.org/repository/cmn-jmeter-0.7.jar -P /opt/jmeter/lib/
+          wget https://repo1.maven.org/maven2/kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar -P /opt/jmeter/lib/
           /opt/jmeter/bin/PluginsManagerCMD.sh install
           /opt/jmeter/bin/PluginsManagerCMD.sh install jpgc-casutg
           /opt/jmeter/bin/PluginsManagerCMD.sh install jpgc-synthesis
