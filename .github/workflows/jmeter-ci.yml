@@ -64,15 +64,15 @@ jobs:
 
       - name: Convert CSV to JSON
         run: |
-          ls -l /results/
+          ls -l results/
           python3 scripts/convert_csv_to_json.py
-          ls -l /results/
+          ls -l results/
 
       - name: Convert JTL to JSON
         run: |
-          ls -l /results/
+          ls -l results/
           python3 scripts/convert_jtl_to_json.py
-          ls -l /results/
+          ls -l results/
 
       - name: Upload JMeter Results as Artifacts
         uses: actions/upload-artifact@v4
