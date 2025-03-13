@@ -54,7 +54,7 @@ jobs:
           export PATH=$PATH:$JMETER_HOME/bin
           echo $PATH
           jmeter -v
-          jmeter -n -t tests/test_plan.jmx -l results/result.jtl -e -o reports/
+          jmeter -n -t tests/test_plan.jmx -l results/result.json -e -o reports/
 
       - name: Generate aggregated report
         run: |
@@ -62,15 +62,19 @@ jobs:
           cat /opt/jmeter/bin/JMeterPluginsCMD.sh
           /opt/jmeter/bin/JMeterPluginsCMD.sh --plugin-type AggregateReport --input-jtl results/result.jtl --generate-csv reports/aggregate_report.csv
 
+      - name: Convert CSV to JSON
+        run: |
+          python3 convert_csv_to_json.py
+
       - name: Upload JMeter Results as Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: jmeter-results
           include-hidden-files: true
           path: |
-            results/result.jtl
+            results/result.json
             reports/statistics.json
-            reports/aggregate_report.csv
+            reports/aggregate_report.json
 
       - name: Test Datadog API Key
         run: |
@@ -82,9 +86,9 @@ jobs:
 
       - name: Compress JTL and JSON file with gzip
         run: |
-          gzip -k results/result.jtl
+          gzip -k results/result.json
           gzip -k reports/statistics.json
-          gzip -k reports/aggregate_report.csv
+          gzip -k reports/aggregate_report.json
 
       - name: Send JMeter Result and Summary to Datadog via API
         run: |
@@ -92,14 +96,14 @@ jobs:
             -H "Content-Type: application/json" \
             -H "DD-API-KEY: ${{ secrets.DATADOG_API_KEY }}" \
             -H "Content-Encoding: gzip" \
-            --data-binary  @results/result.jtl.gz \
+            --data-binary  @results/result.json.gz \
             "https://http-intake.logs.us5.datadoghq.com/api/v2/logs"
 
           curl -X POST \
             -H "Content-Type: application/json" \
             -H "DD-API-KEY: ${{ secrets.DATADOG_API_KEY }}" \
             -H "Content-Encoding: gzip" \
-            --data-binary  @reports/aggregate_report.csv.gz \
+            --data-binary  @reports/aggregate_report.json.gz \
             "https://http-intake.logs.us5.datadoghq.com/api/v2/logs"
 
           curl -X POST \
