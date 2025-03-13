@@ -36,12 +36,13 @@ jobs:
 
       - name: Install JMeter CMD Runner
         run: |
-          /opt/jmeter/bin/PluginsManagerCMD.sh install jpgc-cmd
+          wget https://repo1.maven.org/maven2/kg/apc/cmdrunner/2.3/cmdrunner-2.3.jar -P /opt/jmeter/lib/
           ls -l /opt/jmeter/lib/
           ls -l /opt/jmeter/lib/ext/
           ls -l /opt/jmeter/bin/
           cat /opt/jmeter/bin/JMeterPluginsCMD.sh
-          wget https://repo1.maven.org/maven2/kg/apc/cmdrunner/2.3/cmdrunner-2.3.jar -P /opt/jmeter/lib/
+          /opt/jmeter/bin/PluginsManagerCMD.sh install jpgc-cmd
+          cat /opt/jmeter/bin/JMeterPluginsCMD.sh
 
       - name: Install JMeter Plugins CLI runner & Stepping Thread Group
         run: |
