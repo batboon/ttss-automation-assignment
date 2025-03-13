@@ -39,8 +39,7 @@ jobs:
           java -cp /opt/jmeter/lib/ext/jmeter-plugins-manager.jar:/opt/jmeter/lib/ext/cmdrunner-2.3.jar org.jmeterplugins.repository.PluginManagerCMDInstaller
           ls -l /opt/jmeter/lib/ext/
           ls -l /opt/jmeter/bin/
-
-
+          /opt/jmeter/bin/PluginsManagerCMD.sh install jpgc-cmd
           /opt/jmeter/bin/PluginsManagerCMD.sh install jpgc-casutg
 
       - name: Add JMeter to PATH, Verify Installation, And Run JMeter Tests
