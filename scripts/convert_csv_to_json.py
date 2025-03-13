@@ -7,7 +7,7 @@ def csv_to_json(csv_file):
         rows = list(csv_reader)
     
     # Wrap the rows in a dictionary with a 'logs' key
-    return json.dumps({"logs": rows}, indent=4)
+    return json.dumps({"Aggregated report": rows}, indent=4)
 
 # Write to JSON file
 with open('reports/aggregate_report.json', 'w') as json_file:
