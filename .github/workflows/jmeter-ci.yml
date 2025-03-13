@@ -40,7 +40,7 @@ jobs:
           ls -l /opt/jmeter/lib/
           ls -l /opt/jmeter/lib/ext/
           ls -l /opt/jmeter/bin/
-          wget https://jmeter-plugins.org/get/jpgc-cmd/ -P /opt/jmeter/lib/ext/
+          wget https://repo1.maven.org/maven2/kg/apc/jmeter-plugins-cmd/2.2/jmeter-plugins-cmd-2.2.jar -P /opt/jmeter/lib/ext/
           cat /opt/jmeter/bin/JMeterPluginsCMD.sh
 
       - name: Install JMeter Plugins CLI runner & Stepping Thread Group
