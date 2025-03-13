@@ -54,7 +54,7 @@ jobs:
           export PATH=$PATH:$JMETER_HOME/bin
           echo $PATH
           jmeter -v
-          jmeter -n -t tests/test_plan.jmx -l results/result.json -e -o reports/
+          jmeter -n -t tests/test_plan.jmx -l results/result.jtl -e -o reports/
 
       - name: Generate aggregated report
         run: |
@@ -63,8 +63,10 @@ jobs:
           /opt/jmeter/bin/JMeterPluginsCMD.sh --plugin-type AggregateReport --input-jtl results/result.jtl --generate-csv reports/aggregate_report.csv
 
       - name: Convert CSV to JSON
-        run: |
-          python3 convert_csv_to_json.py
+        run: python3 convert_csv_to_json.py
+
+      - name: Convert JTL to JSON
+        run: python3 convert_jtl_to_json.py
 
       - name: Upload JMeter Results as Artifacts
         uses: actions/upload-artifact@v4
@@ -84,7 +86,7 @@ jobs:
       - name: Install gzip
         run: sudo apt-get install gzip
 
-      - name: Compress JTL and JSON file with gzip
+      - name: Compress JSON files with gzip
         run: |
           gzip -k results/result.json
           gzip -k reports/statistics.json
