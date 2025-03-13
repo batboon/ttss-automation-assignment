@@ -40,7 +40,6 @@ jobs:
           ls -l /opt/jmeter/lib/
           ls -l /opt/jmeter/lib/ext/
           ls -l /opt/jmeter/bin/
-          cat /opt/jmeter/bin/JMeterPluginsCMD.sh
           /opt/jmeter/bin/PluginsManagerCMD.sh install jpgc-cmd
           cat /opt/jmeter/bin/JMeterPluginsCMD.sh
 
